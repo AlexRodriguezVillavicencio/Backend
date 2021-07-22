@@ -33,7 +33,7 @@ while(salir == 'no'):
     elif(opcion == "3"):
         updateAlumno(alumnos)
     elif(opcion == "4"):
-        eliminarAlumno()
+        eliminarAlumno(alumnos)
     else:
         print("MARCO UNA OPCIÓN INCORRECTA")
         continue

@@ -67,6 +67,8 @@ def updateAlumno(alumnos):
     alumnos.insert(posAlumno,actAlumno)
 
 def eliminarAlumno(alumnos):
-    print("ELIMINAR ALUMNO")
-    for i in alumnos:
-        alumnos.pop([i])
+    print("ELIMINAR ALUMNO: ")
+    for i in range(len(alumnos)):
+        i = input(' ')
+        alumnos.remove(i)
+    return alumnos
