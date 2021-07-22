@@ -2,40 +2,40 @@ from random import choice
 #JUEGO DE YANQUEPO
 print('***************************************************************')
 print('***************************************************************')
-print('***************!WELCOME TO THE YANQUENPO GAME!*****************')
+print('*************!BIENVENIDO AL JUEGO DE YANQUENPO!****************')
 print('***************************************************************')
-print('************choose between stone, paper or scissor*************')
+print('************elige entre piedra, papel o tijera*****************')
 print('***************************************************************')
-#DEFINE INPUT AND OUTPUT VARIABLES
-options= ["stone", "paper", "scissor"]
-player = input("input you game:")
+#DEFINE ENTRADAS Y SALIDAS DE VARIABLES
+options= ["piedra", "papel", "tijera"]
+player = input("Ingresa tu jugada:")
 computer = choice(options + options + options)
-print("the computer played:" + computer)
 winner = ""
+play= "si"
 #LOGICA DE LA SOLUCIÓN
-if player == "stone":
-    if computer == "stone":
-        winner = "empate"
-    elif computer == "paper":
-        winner = "computer"
-    elif computer == "scissor":
-        winner = "player"
-if player == "scissor":
-    if computer == "stone":
-        winner = "computer"
-    elif computer == "paper":
-        winner = "player"
-    elif computer == "scissor":
-        winner = "empate"
-if player == "paper":
-    if computer == "stone":
-        winner = "player"
-    elif computer == "paper":
-        winner = "empate"
-    elif computer == "scissor":
-        winner = "computer"
+def jugada ():
+    for i in range(len(options)):
+        a = options[i]
+        if (player == a):
+            if (computer == player):
+                print("han quedado empate")
+            elif (computer != player):
+                if(player == "piedra" and computer == "tijera"):
+                    print("ganaste!")
+                if(player == "piedra" and computer == "papel"):
+                    print("perdiste...suerte para la proxima")
+                if(player == "papel" and computer == "tijera"):
+                    print("perdiste...suerte para la proxima")
+                if(player == "papel" and computer == "piedra"):
+                    print("ganaste!")
+                if(player == "tijera" and computer == "papel"):
+                    print("ganaste!")
+                if(player == "tijera" and computer == "piedra"):
+                    print("perdiste...suerte para la proxima")
 
-#MUESTRO RESULTADOS
-print("El winner es: " + winner)
-
-        
+# #MUESTRO RESULTADOS
+if(player == "papel" or player =="tijera" or player == "piedra"):
+    print("la maquina jugó: " + computer)
+    jugada()
+else:
+    print("ingresa un movimiento valido")
