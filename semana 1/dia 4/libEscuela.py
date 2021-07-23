@@ -14,5 +14,9 @@ class clsAlumno:
     def update(self):
         pass
 
-    def find(self):
-        pass
+
+
+
+
+    #CREAR UN SISTEMA DE CURSOS, AGREGAR CURSOS, MOSTRAR CURSOS... CRUD:: OYTHON REACT ETC.
+    

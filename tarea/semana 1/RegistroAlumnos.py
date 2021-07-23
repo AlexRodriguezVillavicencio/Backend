@@ -1,11 +1,24 @@
 '''PRGRAMA PARA GESTION DE ALUMNOS'''
 #CRUD: CREATE, READ, IPDATE, DELETE
+print('***************************************************************')
+print('**********************REGISTRO DE ALUMNOS**********************')
+print('***************************************************************')
+print('OPCIONES:')
+print('{1} CONSULTAR ALUMNOS')
+print('{2} REGISTRAR ALUMNO')
+print('{3} ACTUALIZAR ALUMNO')
+print('{4} ELIMINAR ALUMNO')
 #DEFINIR VARIABLE DE ENTRADA Y DE SALIDA
 alumnos = []
 alumno = {}
 salir = 'no'
-
 #LOGICA
+def readAlumno(alumnos):
+    print("\nLISTADO DE ALUMNOS:")
+    for a in alumnos:
+        print("======================")
+        for clave,valor in a.items():
+            print(clave + ": " + valor)
 
 def createAlumno(nombre,email,celular):
     nuevoAlumno = {
@@ -16,30 +29,62 @@ def createAlumno(nombre,email,celular):
     alumnos.append(nuevoAlumno)
     return 1
 
-def readAlumno():
-    print("listado de alumnos")
-    for a in alumnos:
-        print("======================")
+def updateAlumno(alumnos):
+    print(" ACTUALIZAR ALUMNO ")
+    posAlumno = -1
+    alumnoBusqueda = input("INGRESE EL NOMBRE DEL ALUMNO :")
+    for i in range(len(alumnos)):
+        a = alumnos[i]
         for clave,valor in a.items():
-            print(clave + ": " + valor)
+            if valor == alumnoBusqueda:
+                print(a)
+                posAlumno = i
+                print("posición del alumno:" + str(posAlumno))
+                break
+    print("ACTUALIZANDO DATOS DEL ALUMNO:")
+    nombre = input("NOMBRE : ")
+    email = input("EMAIL : ")
+    celular = input("CELULAR : ")
+    actAlumno =  {
+            'nombre': nombre,
+            'email': email,
+            'celular': celular
+        }
+    del alumnos[posAlumno]
+    alumnos.insert(posAlumno,actAlumno)
 
+def deleteAlumno(alumnos):
+    print(" ACTUALIZAR ALUMNO ")
+    i = input("INGRESE LA POSICION :")
+    for i in range(len(alumnos)):
+        del alumnos[i] 
+        print(alumnos)
 
+    
+
+#MOSTRAR RESULTADOS
 while(salir == 'no'):
-    print("OPCIONES: 1 - registar alumnos  2 - mostrar alumnos")
-    opcion = input()
+    opcion = input("\n Ingrese su opción: ")
     if(opcion == "1"):
-        print("registro de nuevo alumno: ")
+        readAlumno(alumnos)
+        print("=" * 22)
+
+    elif(opcion == "2"):
         nombre = input("nombre: ")
         email = input("email: ")
         celular = input("celular: ")
         r = createAlumno(nombre,email,celular)
         if r == 1:
-            print("registro exitoso")
-    elif(opcion == "2"):
-        readAlumno()
+            print("---------!registro exitoso!-------------")
+
+    elif(opcion == "3"):
+        updateAlumno(alumnos)
+
+    elif(opcion == "4"):
+        deleteAlumno(alumnos)
+
     else:
         print("marco una opcion incorrecta")
         continue
-    print("desea salir del porgrama?")
+    print("desea salir del programa?")
     salir = input()
-#MOSTRAR RESULTADOS
