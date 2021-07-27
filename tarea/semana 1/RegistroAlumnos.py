@@ -54,17 +54,24 @@ def updateAlumno(alumnos):
     alumnos.insert(posAlumno,actAlumno)
 
 def deleteAlumno(alumnos):
-    print(" ACTUALIZAR ALUMNO ")
-    i = input("INGRESE LA POSICION :")
+    print(" ELIMINAR ALUMNO ")
+    posAlumno = -1
+    alumnoBusqueda = input("INGRESE EL NOMBRE DEL ALUMNO :")
     for i in range(len(alumnos)):
-        del alumnos[i] 
-        print(alumnos)
+        a = alumnos[i]
+        for clave ,valor in a.items():
+            if valor == alumnoBusqueda:
+                print(a)
+                posAlumno = i
+                print("------Eliminado con Exito------")
+                break
+    del alumnos[posAlumno]
 
     
 
 #MOSTRAR RESULTADOS
 while(salir == 'no'):
-    opcion = input("\n Ingrese su opción: ")
+    opcion = input("\nIngrese su opción: ")
     if(opcion == "1"):
         readAlumno(alumnos)
         print("=" * 22)

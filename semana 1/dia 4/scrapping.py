@@ -12,33 +12,7 @@ if status_code == 200:
     html = BeautifulSoup(req.text,"html.parser")
     # print(html)
     """
-    <table class="rgMasterTable" border="0" id="ctl00_cphContent_rgTipoCambio_ctl00" style="width:100%;table-layout:auto;empty-cells:show;">
-			<colgroup>
-		<col>
-		<col>
-		<col>
-	</colgroup>
-<thead>
-				<tr>
-					<th scope="col" class="rgHeader APLI_fila1" style="font-weight:bold;text-align:center;">MONEDA</th><th scope="col" class="rgHeader APLI_fila1" style="font-weight:bold;text-align:center;">COMPRA (S/)</th><th scope="col" class="rgHeader APLI_fila1" style="font-weight:bold;text-align:center;">VENTA (S/)</th>
-				</tr>
-			</thead><tbody>
-			<tr class="rgRow" id="ctl00_cphContent_rgTipoCambio_ctl00__0">
-				<td class="APLI_fila3" style="width:40%;">Dólar de N.A.</td><td class="APLI_fila2" style="width:30%;">3.936</td><td class="APLI_fila2" style="width:30%;">3.944</td>
-			</tr><tr class="rgAltRow" id="ctl00_cphContent_rgTipoCambio_ctl00__1">
-				<td class="APLI_fila3" style="width:40%;">Peso Colombiano</td><td class="APLI_fila2" style="width:30%;">0.001</td><td class="APLI_fila2" style="width:30%;">0.001</td>
-			</tr><tr class="rgRow" id="ctl00_cphContent_rgTipoCambio_ctl00__2">
-				<td class="APLI_fila3" style="width:40%;">Libra Esterlina</td><td class="APLI_fila2" style="width:30%;">5.427</td><td class="APLI_fila2" style="width:30%;">5.471</td>
-			</tr><tr class="rgAltRow" id="ctl00_cphContent_rgTipoCambio_ctl00__3">
-				<td class="APLI_fila3" style="width:40%;">Peso Mexicano</td><td class="APLI_fila2" style="width:30%;">&nbsp;</td><td class="APLI_fila2" style="width:30%;">0.227</td>
-			</tr><tr class="rgRow" id="ctl00_cphContent_rgTipoCambio_ctl00__4">
-				<td class="APLI_fila3" style="width:40%;">Franco Suizo</td><td class="APLI_fila2" style="width:30%;">4.290</td><td class="APLI_fila2" style="width:30%;">4.290</td>
-			</tr><tr class="rgAltRow" id="ctl00_cphContent_rgTipoCambio_ctl00__5">
-				<td class="APLI_fila3" style="width:40%;">Euro</td><td class="APLI_fila2" style="width:30%;">4.535</td><td class="APLI_fila2" style="width:30%;">4.941</td>
-			</tr>
-			</tbody>
 
-		</table>
     """
     tabla = html.find('table', {'class':'rgMasterTable'})
     # print(tabla)
