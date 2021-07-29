@@ -20,3 +20,4 @@ source vcodigo/scripts/activate
 ---------------------------------------------
 import requests
 from bs4 import BeautifulSoup  (mejor opción, hace menos pesado)
+

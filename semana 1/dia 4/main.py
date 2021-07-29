@@ -50,11 +50,11 @@ if (os.path.isfile(fileName)):
     #print(fAlumnos)
     alumnos = cargarAlumnos(fAlumnos)
     fr.close()
-# else:
-#     fr = open(fileName,'w')
-#     fr.write("\n")
-#     alumnos[]
-#     fr.close()
+else:
+    fr = open(fileName,'w')
+    fr.write("\n")
+    # alumnos[]
+    fr.close()
 
 while(salir == 'no'):
     menuopciones()
