@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+        Sistema pos
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
+</head>
+<body>
+    <!-- aqui voy a agregar mis hojas de estilo etc -->
+    <header>
+        <img src="{{ url_for('static',filename = 'images/images.png')}}" />
+        <a href="{{ url_for('index') }}">INICIO</a>
+    </header>
+    {% block content %}
+    {% endblock %}
+
+
+</body>
+</html>
