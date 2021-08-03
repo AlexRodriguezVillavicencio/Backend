@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter.ttk import Treeview
 import sqlite3
 
-# para nuestra base d eatos bamos a desacargar sqlite administrador:
+# para nuestra base d eatos vamos a desacargar sqlite administrador:
 #http://sqliteadmin.orbmu2k.de/
 
 class Alumno:

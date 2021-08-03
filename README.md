@@ -26,4 +26,3 @@ from bs4 import BeautifulSoup  (mejor opción, hace menos pesado)
 para levantar flask en la web de manera de desarrollo:
 export FLASK_APP=main.py
 export FLASK_ENV=development
-flask run
