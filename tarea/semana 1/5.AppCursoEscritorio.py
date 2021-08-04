@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter.ttk import Treeview
+from tkinter import ttk
 import sqlite3
 
 class curso:
@@ -12,39 +13,67 @@ class curso:
             resultado = cursor.execute(sql,parametros)
             conn.commit()
         return resultado
-
-    def readCursos(self):
+#obtencion de datos registrados anteriormente
+    def readCursos(self):   
         rsCursos = self.trvCursos.get_children()
-        for element in rsCursos:
-            self.trvCursos.delete(element)
-
-        sqlCursos = 'SELECT * FROM CURSOS'
+        for e in rsCursos:
+            self.trvCursos.delete(e)
+        sqlCursos = "select * from cursos"
         resultado = self.ejecutarSql(sqlCursos)
         for fila in resultado:
             self.trvCursos.insert('',0, text=fila[0], values=(fila[1],fila[2]))
-
+#validacion de los campos para guadrarlos en la base de datos
+    def validacion(self):
+        return len(self.curso.get()) != 0  and len(self.nota.get()) != 0
+#agregando nuevos cursos
     def createCurso(self):
-        sqlInsertCurso = 'insert into cursos values(?,?)'
-        parametros = (self.id.get(), self.curso.get(),self.nota.get())
-        self.ejecutarSql(sqlInsertCurso,parametros)
+        if self.validacion():
+            sqlInsertCurso = 'insert into cursos values(?,?,?)'
+            parametros = (self.id.get(), self.curso.get(),self.nota.get())
+            self.ejecutarSql(sqlInsertCurso,parametros)
+            self.mensajePop['text'] = 'Registro exitoso'
+            self.readCursos()
+        else:
+            self.mensajePop['text'] = 'Llene todos los campos'
+#eliminando cursos
+    def eliminarCurso(self):
+        self.mensajePop['text'] = ''
+        try:
+            self.trvCursos.item(self.trvCursos.selection())['text'][0]
+        except IndexError as e:
+            self.mensajePop['text'] = 'selecciona un registro'
+            return
+        curso = self.trvCursos.item(self.trvCursos.selection())['values'][1]
+        sqlCursos = 'DELETE FROM cursos WHERE curso = ?'
+        self.createCurso(sqlCursos,curso)
+        self.mensajePop['text'] = 'Curso eliminado satisfactoriamente'
         self.readCursos()
 
 
+
     def __init__(self,window):
-        self.window = window
-        self.window.title('Lenguajes de Programación')
+        self.wind = window
+        self.wind.title('Lenguajes de Programación')
 
-        frame = LabelFrame(window,text = "Registro de notas por curso")
+        frame = LabelFrame(self.wind,text = "Registro de notas por curso")
         frame.grid(row=0, column=0, columnspan=3,pady=10)
-
+#creando etiquetas para llenado
         Label(frame, text='id: ').grid(row=1,column=0)
-        Entry(frame).grid(row=1,column=1)
+        self.id = Entry(frame)
+        self.id.grid(row=1,column=1)
         Label(frame, text='curso: ').grid(row=2,column=0)
-        Entry(frame).grid(row=2,column=1)
+        self.curso = Entry(frame)
+        self.curso.grid(row=2,column=1)
         Label(frame, text='nota: ').grid(row=3,column=0)
-        Entry(frame).grid(row=3,column=1)
-
-        Button(frame,text='registrar',command=self.createCurso).grid(row=4,columnspan=2,sticky= W + E)
+        self.nota = Entry(frame)
+        self.nota.grid(row=3,column=1)
+        #creación de botones
+        ttk.Button(frame,text='registrar',command=self.createCurso).grid(row=4,columnspan=2,sticky= W + E)
+        ttk.Button(frame,text='editar',command=self.createCurso).grid(row=5,column=0,sticky= W + E)
+        ttk.Button(frame,text='eliminar',command=self.eliminarCurso).grid(row=5,column=1,sticky= W + E)
+        #mensajes saltones
+        self.mensajePop = Label(text='',fg='red')
+        self.mensajePop.grid(row=4, column=0,columnspan=3,sticky=W+E)
 
         self.trvCursos = Treeview(height=10,columns=('#1','#2'))
         self.trvCursos.grid(row=5,column=0)
@@ -56,5 +85,5 @@ class curso:
         self.readCursos()
 
 window = Tk()
-app= curso(window)
+app = curso(window)
 window.mainloop()
