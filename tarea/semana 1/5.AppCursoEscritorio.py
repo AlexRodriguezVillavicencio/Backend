@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter.ttk import Treeview
 from tkinter import ttk
 import sqlite3
+import tkinter as tk
 
 class curso:
 
@@ -39,13 +40,13 @@ class curso:
     def eliminarCurso(self):
         self.mensajePop['text'] = ''
         try:
-            self.trvCursos.item(self.trvCursos.selection())['text'][0]
+            self.trvCursos.item(self.trvCursos.selection())['text']
         except IndexError as e:
             self.mensajePop['text'] = 'selecciona un registro'
             return
-        curso = self.trvCursos.item(self.trvCursos.selection())['values'][1]
-        sqlCursos = 'DELETE FROM cursos WHERE curso = ?'
-        self.createCurso(sqlCursos,curso)
+        curso = self.trvCursos.item(self.trvCursos.selection())['text']
+        sqlCursos = 'DELETE FROM cursos WHERE id = ?'
+        self.createCurso(sqlCursos,(id,))
         self.mensajePop['text'] = 'Curso eliminado satisfactoriamente'
         self.readCursos()
 
@@ -68,11 +69,11 @@ class curso:
         self.nota = Entry(frame)
         self.nota.grid(row=3,column=1)
         #creación de botones
-        ttk.Button(frame,text='registrar',command=self.createCurso).grid(row=4,columnspan=2,sticky= W + E)
-        ttk.Button(frame,text='editar',command=self.createCurso).grid(row=5,column=0,sticky= W + E)
-        ttk.Button(frame,text='eliminar',command=self.eliminarCurso).grid(row=5,column=1,sticky= W + E)
+        tk.Button(frame,text='registrar',command=self.createCurso, bg = 'green',fg='white').grid(row=4,columnspan=2,sticky= W + E)
+        tk.Button(frame,text='editar',command=self.createCurso, bg='yellow').grid(row=5,column=0,sticky= W + E)
+        tk.Button(frame,text='eliminar',command=self.eliminarCurso,bg='red',fg='white').grid(row=5,column=1,sticky= W + E)
         #mensajes saltones
-        self.mensajePop = Label(text='',fg='red')
+        self.mensajePop = Label(text='',fg='red' , bg= '#000')
         self.mensajePop.grid(row=4, column=0,columnspan=3,sticky=W+E)
 
         self.trvCursos = Treeview(height=10,columns=('#1','#2'))
