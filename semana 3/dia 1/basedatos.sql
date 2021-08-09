@@ -11,52 +11,44 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
--- Volcando estructura para tabla db_sistemapos.tipo_doc_ide
-CREATE TABLE IF NOT EXISTS `tipo_doc_ide` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='tipos de documentos de identidad';
 
--- Volcando datos para la tabla db_sistemapos.tipo_doc_ide: ~3 rows (aproximadamente)
-/*!40000 ALTER TABLE `tipo_doc_ide` DISABLE KEYS */;
-INSERT INTO `tipo_doc_ide` (`id`, `nombre`) VALUES
-	(1, 'DNI'),
-	(2, 'RUC'),
-	(3, 'CARNET EXTRANJERIA');
-/*!40000 ALTER TABLE `tipo_doc_ide` ENABLE KEYS */;
+
+-- Volcando estructura de base de datos para db_sistemapos
+CREATE DATABASE IF NOT EXISTS `db_sistemapos` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci */;
+USE `db_sistemapos`;
+
 -- Volcando estructura para tabla db_sistemapos.cat_producto
 CREATE TABLE IF NOT EXISTS `cat_producto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='categoria de producto';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Categoria de productos';
 
 -- Volcando datos para la tabla db_sistemapos.cat_producto: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `cat_producto` DISABLE KEYS */;
 INSERT INTO `cat_producto` (`id`, `nombre`) VALUES
 	(1, 'PC'),
-	(2, 'LAPTOP');
+	(2, 'laptop');
 /*!40000 ALTER TABLE `cat_producto` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_sistemapos.clientes
 CREATE TABLE IF NOT EXISTS `clientes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tipo_doc_ide_id` int(11) NOT NULL DEFAULT '0' COMMENT 'referencia a tabla tipo_doc_ide',
-  `nro_doc` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Tipo de Documento',
+  `tipo_doc_ide` int(11) NOT NULL DEFAULT '0' COMMENT 'Referencia a la tabla tiop_doc_ide',
+  `nro_doc` varchar(20) COLLATE utf8_spanish_ci NOT NULL DEFAULT '',
   `nombre` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `telefono` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `email` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `correo` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `u_documento_identidad` (`tipo_doc_ide_id`,`nro_doc`),
-  CONSTRAINT `fk_clientes_tipo_doc_ide` FOREIGN KEY (`tipo_doc_ide_id`) REFERENCES `tipo_doc_ide` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='registra los clientes del sistema';
+  UNIQUE KEY `u_documento` (`tipo_doc_ide`,`nro_doc`),
+  CONSTRAINT `FK_clientes_tipo_doc_ide` FOREIGN KEY (`tipo_doc_ide`) REFERENCES `tipo_doc_ide` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Registra los clientes del sistema';
 
 -- Volcando datos para la tabla db_sistemapos.clientes: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` (`id`, `tipo_doc_ide_id`, `nro_doc`, `nombre`, `telefono`, `email`) VALUES
-	(1, 1, '41776255', 'CESAR MAYTA', '956290589', 'cesarmayta@gmail.com'),
-	(2, 2, '204155638', 'SAFIRO S.R.L', '01501546', 'info@safirosrl.pe');
+INSERT INTO `clientes` (`id`, `tipo_doc_ide`, `nro_doc`, `nombre`, `telefono`, `correo`) VALUES
+	(1, 1, '75584292', 'alex', '978123876', 'ale@email.com'),
+	(2, 2, '1075584932', 'Alex EIRL', '01 75543621', 'soluciones@alex.pe');
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_sistemapos.producto
@@ -75,20 +67,42 @@ CREATE TABLE IF NOT EXISTS `producto` (
   PRIMARY KEY (`id`),
   KEY `fk_producto_cat_producto_id` (`cat_producto_id`),
   CONSTRAINT `fk_producto_cat_producto_id` FOREIGN KEY (`cat_producto_id`) REFERENCES `cat_producto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='producto';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='producto';
 
--- Volcando datos para la tabla db_sistemapos.producto: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla db_sistemapos.producto: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
 INSERT INTO `producto` (`id`, `cat_producto_id`, `nombre`, `marca`, `modelo`, `nro_serie`, `mem_ram`, `procesador`, `disco_duro`, `precio`, `stock`) VALUES
-	(1, 1, 'PC CORE I5 ESTUDIANTES', 'LENOVO', 'E5100', '2394U93493', '8 GB', 'CORE I 5 10', '1 TB', 3500.00, 10),
-	(2, 2, 'DELL INSPIRON 5000', 'DELL', 'INSIPIRON', 'JKH-233', '16 GB', 'CORE I 7 11', '1 TB', 4700.00, 5),
-	(3, 1, 'PC GAMER', 'ASUS', 'ASDF', '2323', '32 GB', 'INTEL CORE I 9 11VA', '2 TB', 9750.00, 3),
-	(4, 2, 'LAPTOP GAMER DOTA 2', 'ACER A9500', '234', '23324', '64 GB', 'AMD RAYZER 9', '4 TB', 15600.00, 1),
-	(5, 1, '12345678901', '12345678901', '12345678901', '12345678901', '12345678901', '12345678901', '12345678901', 21.00, 1),
-	(6, 2, 'LAPTOP BASICA', 'HP', 'PAVILION', '22332', '4 GB', 'INTEL CORE I3', '500 GB', 1200.00, 20);
+	(1, 1, 'PC CORE I5 Estudiante', 'LENOVO', '5100', '34434FF43', '8GB', 'CORE I5 10', '1 TB', 3500.00, 20),
+	(2, 2, 'DELL INSPIRON 5000', 'DELL', 'INSPIRON', '12Q21', '16GB', 'CORE I7 11', '1 TB', 4500.00, 5);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 
+-- Volcando estructura para tabla db_sistemapos.productos
+CREATE TABLE IF NOT EXISTS `productos` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `nombre` varchar(255) COLLATE utf8_spanish_ci NOT NULL DEFAULT '',
+  `precio` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `stock` bigint(20) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+-- Volcando datos para la tabla db_sistemapos.productos: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `productos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `productos` ENABLE KEYS */;
+
+-- Volcando estructura para tabla db_sistemapos.tipo_doc_ide
+CREATE TABLE IF NOT EXISTS `tipo_doc_ide` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='tipo de documento de indentidad';
+
+-- Volcando datos para la tabla db_sistemapos.tipo_doc_ide: ~3 rows (aproximadamente)
+/*!40000 ALTER TABLE `tipo_doc_ide` DISABLE KEYS */;
+INSERT INTO `tipo_doc_ide` (`id`, `nombre`) VALUES
+	(1, 'DNI'),
+	(2, 'RUC\r\n'),
+	(3, 'CARNET EXTRANJERIA');
+/*!40000 ALTER TABLE `tipo_doc_ide` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
