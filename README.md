@@ -26,3 +26,29 @@ from bs4 import BeautifulSoup  (mejor opción, hace menos pesado)
 para levantar flask en la web de manera de desarrollo:
 export FLASK_APP=main.py
 export FLASK_ENV=development
+
+
+
+
+para django:
+>python manage.py migrate
+>python manage.py runserver
+
+en el directorio setting agregar:
+'rest_framework',
+    'rest_framework.authtoken'
+
+luego hacer el migrate para que se carguen las nuevas tablas:
+<python manage.py migrate>
+
+ahora creamos un superusuario:
+>python manage.py createsuperuser
+alexander alex12345
+
+
+
+
+instalamos:
+>pip install requests
+
+
